@@ -1,0 +1,19 @@
+class Solution {
+    public int trap(int[] h) {
+        int[] pre=new int[h.length];
+        pre[0]=h[0];
+        for(int i=1;i<h.length;i++){
+             pre[i]=Math.max(pre[i-1],h[i]);
+        }
+        int[] po=new int[h.length];
+        po[h.length-1]=h[h.length-1];
+        for(int i=h.length-2;i>=0;i--){
+            po[i]=Math.max(h[i],po[i+1]);
+        }
+        int ans=0;
+        for(int i=0;i<h.length;i++){
+            ans+=Math.min(po[i],pre[i])-h[i];
+        }
+        return ans;
+    }
+}
