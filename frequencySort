@@ -1,0 +1,55 @@
+27 minute-missed the constrain of digit
+class Solution {
+    public String frequencySort(String s) {
+        
+        int[] smallLetter=new int[26];
+        int[] capitalLetter=new int[26];
+        int[] digits = new int[10];
+        int max=0;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)>='A' && s.charAt(i)<='Z'){
+                capitalLetter[s.charAt(i)-'A']++;
+                max=Math.max(max,capitalLetter[s.charAt(i)-'A']);
+            }
+            else if(s.charAt(i)>='a' && s.charAt(i)<='z'){
+                smallLetter[s.charAt(i)-'a']++;
+                max=Math.max(max,smallLetter[s.charAt(i)-'a']);
+            }
+            else if (s.charAt(i)>='0' && s.charAt(i)<= '9') {
+                digits[s.charAt(i)-'0']++;
+                max=Math.max(max, digits[s.charAt(i)- '0']);
+            }
+            
+        }
+        List<List<Character>> list=new ArrayList<>();
+       // StringBuilder sb=new StringBuilder();
+        for(int i=0;i<=max;i++){
+            list.add(new ArrayList<>());
+        }
+
+        for(int i=0;i<26;i++){
+            if(capitalLetter[i]>0){
+                list.get(capitalLetter[i]).add((char)(i+'A'));
+            }
+            if(smallLetter[i]>0){
+                list.get(smallLetter[i]).add((char)(i+'a'));
+            }
+        }
+
+        for (int i=0;i<10;i++) {
+            if(digits[i]>0) {
+                list.get(digits[i]).add((char)(i+'0'));
+            }
+        }
+        StringBuilder sb=new StringBuilder();
+
+        for (int i=max;i>0;i--) {
+            List<Character> total =list.get(i);
+            for (char c:total) {
+                sb.append(String.valueOf(c).repeat(i));
+            }
+        }
+            return sb.toString();
+        
+    }
+}
